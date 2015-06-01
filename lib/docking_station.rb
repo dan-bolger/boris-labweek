@@ -1,15 +1,30 @@
 require_relative 'bike'
 
 class DockingStation
+  DEFAULT_CAPACITY = 20
+
+  def initialize
+    @bikes = []
+  end
 
   def dock(bike)
-    fail 'Docking station full!' if @bike
-    @bike = bike
+    fail 'Docking station full!' if full?
+    @bikes << bike
   end
 
   def release_bike
-    fail 'No bikes!' unless @bike
-    @bike
+    fail 'No bikes!' if empty?
+    @bikes.pop
+  end
+
+  private
+
+  def full?
+    @bikes.count >= DEFAULT_CAPACITY
+  end
+
+  def empty?
+    @bikes.empty?
   end
 
 end
